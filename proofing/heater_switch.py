@@ -8,6 +8,7 @@ class HeaterSwitch:
         gpio.setup(self.pin, gpio.OUT)
 
         # start turned off, mitigate previous run cleanup failure
+        self.on = False
         self.turn_off()
 
     def toggle(self):
@@ -23,3 +24,7 @@ class HeaterSwitch:
     def turn_off(self):
         self.on = False
         gpio.output(self.pin, gpio.LOW)
+
+
+def cleanup():
+    gpio.cleanup()

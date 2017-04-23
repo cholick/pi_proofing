@@ -4,8 +4,8 @@ import mock
 
 import config
 import habitat
-import temp_sensor
 import influx_metrics
+import temp_sensor
 
 
 class TestTemp(unittest.TestCase):
