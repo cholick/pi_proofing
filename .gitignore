@@ -1,0 +1,10 @@
+
+.idea
+
+*.pyc
+vendor
+local_dev.sh
+env
+bin
+tmp
+config.json
