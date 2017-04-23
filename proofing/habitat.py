@@ -3,11 +3,12 @@ from __future__ import print_function
 import time
 
 
-class Habitat():
-    def __init__(self, conf, sensor, switch):
+class Habitat:
+    def __init__(self, conf, sensor, switch, metrics=None):
         self.conf = conf
         self.sensor = sensor
         self.switch = switch
+        self.metrics = metrics
         self.run = True
 
     def maintain(self):
@@ -27,5 +28,8 @@ class Habitat():
             if toggle:
                 print("Toggling switch from {} to {}".format(self.switch.on, not self.switch.on))
                 self.switch.toggle()
+
+            if self.metrics:
+                self.metrics.report(temp, self.switch.on)
 
             time.sleep(2)

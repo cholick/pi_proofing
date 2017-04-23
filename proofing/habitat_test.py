@@ -5,6 +5,7 @@ import mock
 import config
 import habitat
 import temp_sensor
+import influx_metrics
 
 
 class TestTemp(unittest.TestCase):
@@ -84,3 +85,27 @@ class TestTemp(unittest.TestCase):
         self.sensor.read_fahrenheit.return_value = 32
 
         self.assertRaises(RuntimeError, self.habitat.maintain)
+
+    @mock.patch('habitat.print')
+    @mock.patch('time.sleep')
+    def test_reports_metrics(self, mock_sleep, mock_print):
+        def side_effect():
+            global counter
+            counter += 1
+            if counter >= 5:
+                self.habitat.run = False
+            return 60 + counter
+
+        self.sensor.read_fahrenheit.side_effect = side_effect
+        metrics = mock.Mock(influx_metrics.InfluxMetrics)
+        self.habitat = habitat.Habitat(self.conf, self.sensor, self.swtich, metrics)
+
+        self.habitat.maintain()
+
+        self.assertEqual(metrics.report.call_count, 5)
+
+        call1 = metrics.report.call_args_list[0]
+        self.assertEqual(call1[0], (61, False))
+
+        call5 = metrics.report.call_args_list[4]
+        self.assertEqual(call5[0], (65, False))

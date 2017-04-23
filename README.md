@@ -21,7 +21,7 @@ python -m unittest discover -v -s proofing -p '*_test.py'
 ```
 
 ```bash
-rsync -avzh --delete --exclude=env --exclude=.idea . pi@192.168.2.19:~/app
+rsync -avzh --delete --exclude=env --exclude=.git --exclude=.idea . pi@192.168.2.19:~/app
 ```
 
 ### Todo

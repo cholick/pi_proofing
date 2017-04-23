@@ -1,7 +1,7 @@
 import re
 
 
-class TempSensor():
+class TempSensor:
     def __init__(self, serial):
         self.serial = serial
 

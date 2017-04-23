@@ -1,14 +1,16 @@
 import RPi.GPIO as gpio
 
 
-class HeaterSwitch():
+class HeaterSwitch:
     def __init__(self, pin):
         self.pin = pin
-        self.on = False
         gpio.setmode(gpio.BCM)
+        gpio.setup(self.pin, gpio.OUT)
+
+        # start turned off, mitigate previous run cleanup failure
+        self.turn_off()
 
     def toggle(self):
-        gpio.setup(self.pin, gpio.OUT)
         if self.on:
             self.turn_off()
         else:

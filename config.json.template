@@ -1,5 +1,9 @@
 {
-  "serial": "",
+  "serial": "28-0.....",
   "switchPin": 26,
-  "temp": 81
+  "temp": 81,
+  "influxURL": "https://...",
+  "influxValidateSSL": false,
+  "influxUser": "...",
+  "influxPassword": "..."
 }
