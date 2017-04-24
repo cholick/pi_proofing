@@ -1,6 +1,6 @@
 import os
-import sys
 import signal
+import sys
 
 from proofing import config, habitat, heater_switch, influx_metrics, temp_sensor
 
@@ -9,9 +9,13 @@ sys.path.insert(1, os.path.join(PATH, 'lib'))
 
 
 def handler_stop_signals(signum, frame):
+    cleanup()
+    sys.exit(0)
+
+
+def cleanup():
     print "Cleaning up"
     heater_switch.cleanup()
-    sys.exit(0)
 
 
 def main():
@@ -33,4 +37,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print e
+        cleanup()
+        sys.exit(1)
